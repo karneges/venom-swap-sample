@@ -10,7 +10,7 @@ IFREF {
 GETGLOB 6
 THROWIF 51
 ENDS
-.loc ../contracts/ExchangeContract.tsol, 20
+.loc ../contracts/ExchangeContract.tsol, 21
 ACCEPT
 .loc ../contracts/ExchangeContract.tsol, 0
 CALLREF {
@@ -27,7 +27,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/ExchangeContract.tsol, 23
+.loc ../contracts/ExchangeContract.tsol, 24
 OVER
 PUSHCONT {
 	LDU 64
@@ -63,7 +63,7 @@ CALLREF {
 THROW 0
 
 .macro makeSwap_73a6783f_internal_macro
-.loc ../contracts/ExchangeContract.tsol, 32
+.loc ../contracts/ExchangeContract.tsol, 33
 ROLL 5
 GETGLOB 10
 PUSHINT 267
@@ -74,12 +74,12 @@ PUSHCONT {
 	}
 }
 IFNOT
-.loc ../contracts/ExchangeContract.tsol, 33
+.loc ../contracts/ExchangeContract.tsol, 34
 PUSHSLICE x2_
 OVER
 SDEQ
 THROWIF 101
-.loc ../contracts/ExchangeContract.tsol, 34
+.loc ../contracts/ExchangeContract.tsol, 35
 PUSHINT 100000000
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
@@ -87,24 +87,24 @@ PUSHREFSLICE {
 CALLREF {
 	CALL $GasValues_no_obj_getPoolDirectExchangeGas_47b146c5_macro$
 }
-.loc ../contracts/ExchangeContract.tsol, 35
+.loc ../contracts/ExchangeContract.tsol, 36
 DUP
 SECOND
 SWAP
 FIRST
 ADD
 UFITS 128
-.loc ../contracts/ExchangeContract.tsol, 36
+.loc ../contracts/ExchangeContract.tsol, 37
 DEPTH
 ADDCONST -2
 PICK
 SWAP
 GEQ
 THROWIFNOT 102
-.loc ../contracts/ExchangeContract.tsol, 37
+.loc ../contracts/ExchangeContract.tsol, 38
 PUSHREF {
 }
-.loc ../contracts/ExchangeContract.tsol, 38
+.loc ../contracts/ExchangeContract.tsol, 39
 ROLL 7
 PUSH S4
 ROLL 4
@@ -119,7 +119,7 @@ NULL
 CALLREF {
 	CALL $PairPayload_no_obj_buildExchangePayloadV2_0d450309_macro$
 }
-.loc ../contracts/ExchangeContract.tsol, 50
+.loc ../contracts/ExchangeContract.tsol, 51
 TRUE
 MYADDR
 BLKSWAP 4, 3
@@ -156,7 +156,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/ExchangeContract.tsol, 61
+.loc ../contracts/ExchangeContract.tsol, 62
 OVER
 PUSHCONT {
 	LDREF
@@ -191,7 +191,7 @@ CALLREF {
 THROW 0
 
 .macro onAcceptTokensTransfer_e63f2284_internal_macro
-.loc ../contracts/ExchangeContract.tsol, 70
+.loc ../contracts/ExchangeContract.tsol, 71
 DROP
 GETGLOB 10
 ROLL 5
@@ -201,7 +201,7 @@ ROTREV
 PUSHINT 267
 DICTSET
 SETGLOB 10
-.loc ../contracts/ExchangeContract.tsol, 71
+.loc ../contracts/ExchangeContract.tsol, 72
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -222,7 +222,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/ExchangeContract.tsol, 78
+.loc ../contracts/ExchangeContract.tsol, 79
 OVER
 PUSHCONT {
 	LDU 64
@@ -256,7 +256,7 @@ CALLREF {
 THROW 0
 
 .macro dexPairExchangeSuccess_8d6a631b_internal_macro
-.loc ../contracts/ExchangeContract.tsol, 80
+.loc ../contracts/ExchangeContract.tsol, 81
 ROT
 PUSHSLICE xc000000000000000000000000061e8e4c6
 NEWC
