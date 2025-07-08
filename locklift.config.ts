@@ -79,6 +79,10 @@ const config: LockliftConfig = {
               path: "external_abi/VaultTokenWallet.abi.json",
             },
           },
+          {
+            abi: { path: "external_abi/DexRoot.abi.json" },
+            address: "0:8befb8324b036876ac5da268570031c10b0baa5c26bc7f69af17b2db20fc09b7",
+          },
         ],
         source: {
           type: "live",

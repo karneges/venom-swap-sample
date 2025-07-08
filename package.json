@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "test": "npx locklift test",
-    "runs:script": "npx locklift run -s scripts/1-deploy-sample.ts"
+    "swap-via-contract": "npx locklift run -s scripts/1-deploy-sample.ts",
+    "direct-swap": "npx locklift run -s scripts/2-direct-swap.ts"
   },
   "author": "",
   "license": "ISC",

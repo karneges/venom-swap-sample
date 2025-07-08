@@ -1,6 +1,11 @@
 # Example of swap contract implementation
 
-### How to run
+### Deploy and swap via custom contract
 ```bash
-npm run runs:script
+npm run swap-via-contract
+```
+
+### Direct swap
+```bash
+npm run direct-swap
 ```
