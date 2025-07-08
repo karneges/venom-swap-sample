@@ -1,0 +1,74 @@
+pragma ever-solidity >= 0.61.2;
+pragma AbiHeader expire;
+pragma AbiHeader pubkey;
+
+import "dex/contracts/libraries/PairPayload.tsol";
+import "tip3-contracts/contracts/interfaces/IAcceptTokensTransferCallback.tsol";
+import {IExchangeResult} from "dex/contracts/structures/IExchangeResult.tsol";
+import {ITokenWallet} from "tip3-contracts/contracts/interfaces/ITokenWallet.tsol";
+import "locklift/src/console.tsol";
+
+contract ExchangeContract is IAcceptTokensTransferCallback {
+    mapping(address => address) rootToWallet;
+    uint16 constant WALLET_NOT_EXISTS = 101; // 1 TON
+    constructor() public {
+        tvm.accept();
+    }
+
+    function makeSwap(
+        uint64 queryId,
+        address tokenIn,
+        uint128 amountIn,
+        address tokenOut,
+        address pair,
+        uint128 deployWalletValue,
+        uint128 expectedAmountOut
+    ) external {
+        address tokenWallet = rootToWallet[tokenIn];
+        require(address.makeAddrNone() != tokenWallet, WALLET_NOT_EXISTS);
+        TvmCell e;
+        TvmCell swapPayload = PairPayload.buildExchangePayloadV2(
+            queryId,
+            deployWalletValue,
+            expectedAmountOut,
+            address(this),
+            tokenOut,
+            address(0),
+            e,
+            e,
+            null
+        );
+
+        ITokenWallet(tokenWallet).transfer{value: 0, flag: 64}(
+            amountIn,
+            pair,
+            deployWalletValue,
+            address(this),
+            true,
+            swapPayload
+        );
+    }
+
+
+    function onAcceptTokensTransfer(
+        address tokenRoot,
+        uint128 amount,
+        address sender,
+        address senderWallet,
+        address remainingGasTo,
+        TvmCell payload
+    ) external override {
+
+        rootToWallet[tokenRoot] = msg.sender;
+        console.log(format("tokenRoot {}, amount {}", tokenRoot, amount));
+        remainingGasTo.transfer({
+            value: 0,
+            flag: 64
+        });
+
+    }
+
+    function dexPairExchangeSuccess(uint64 id, bool via_account, IExchangeResult.ExchangeResult result) external {
+        // will be call before tokens actually transferred
+    }
+}
