@@ -9,6 +9,7 @@ import {ITokenWallet} from "tip3-contracts/contracts/interfaces/ITokenWallet.tso
 import "locklift/src/console.tsol";
 
 contract ExchangeContract is IAcceptTokensTransferCallback {
+    event SwapSuccess(uint64 queyId ,IExchangeResult.ExchangeResult result);
     mapping(address => address) rootToWallet;
     uint16 constant WALLET_NOT_EXISTS = 101; // 1 TON
     constructor() public {
@@ -60,7 +61,6 @@ contract ExchangeContract is IAcceptTokensTransferCallback {
     ) external override {
 
         rootToWallet[tokenRoot] = msg.sender;
-        console.log(format("tokenRoot {}, amount {}", tokenRoot, amount));
         remainingGasTo.transfer({
             value: 0,
             flag: 64
@@ -70,5 +70,6 @@ contract ExchangeContract is IAcceptTokensTransferCallback {
 
     function dexPairExchangeSuccess(uint64 id, bool via_account, IExchangeResult.ExchangeResult result) external {
         // will be call before tokens actually transferred
+        emit SwapSuccess(id, result);
     }
 }

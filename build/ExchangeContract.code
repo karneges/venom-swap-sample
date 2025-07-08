@@ -10,7 +10,7 @@ IFREF {
 GETGLOB 6
 THROWIF 51
 ENDS
-.loc ../contracts/ExchangeContract.tsol, 15
+.loc ../contracts/ExchangeContract.tsol, 16
 ACCEPT
 .loc ../contracts/ExchangeContract.tsol, 0
 CALLREF {
@@ -27,7 +27,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/ExchangeContract.tsol, 18
+.loc ../contracts/ExchangeContract.tsol, 19
 OVER
 PUSHCONT {
 	LDU 64
@@ -63,7 +63,7 @@ CALLREF {
 THROW 0
 
 .macro makeSwap_73a6783f_internal_macro
-.loc ../contracts/ExchangeContract.tsol, 27
+.loc ../contracts/ExchangeContract.tsol, 28
 ROLL 5
 GETGLOB 10
 PUSHINT 267
@@ -74,15 +74,15 @@ PUSHCONT {
 	}
 }
 IFNOT
-.loc ../contracts/ExchangeContract.tsol, 28
+.loc ../contracts/ExchangeContract.tsol, 29
 PUSHSLICE x2_
 OVER
 SDEQ
 THROWIF 101
-.loc ../contracts/ExchangeContract.tsol, 29
+.loc ../contracts/ExchangeContract.tsol, 30
 PUSHREF {
 }
-.loc ../contracts/ExchangeContract.tsol, 30
+.loc ../contracts/ExchangeContract.tsol, 31
 ROLL 7
 PUSH S4
 ROLL 4
@@ -97,7 +97,7 @@ NULL
 CALLREF {
 	CALL $PairPayload_no_obj_buildExchangePayloadV2_0d450309_macro$
 }
-.loc ../contracts/ExchangeContract.tsol, 42
+.loc ../contracts/ExchangeContract.tsol, 43
 TRUE
 MYADDR
 BLKSWAP 4, 3
@@ -134,7 +134,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/ExchangeContract.tsol, 53
+.loc ../contracts/ExchangeContract.tsol, 54
 OVER
 PUSHCONT {
 	LDREF
@@ -169,41 +169,16 @@ CALLREF {
 THROW 0
 
 .macro onAcceptTokensTransfer_e63f2284_internal_macro
-.loc ../contracts/ExchangeContract.tsol, 62
+.loc ../contracts/ExchangeContract.tsol, 63
 DROP
-GETGLOB 9
-PUSH S5
 GETGLOB 10
+ROLL 5
+SWAP
+GETGLOB 9
+ROTREV
 PUSHINT 267
 DICTSET
 SETGLOB 10
-.loc ../contracts/ExchangeContract.tsol, 63
-TUPLE 0
-NEWC
-PUSHSLICE x746f6b656e526f6f7420
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-ROLL 6
-CALLREF {
-	CALL $convertAddressToHexString_macro$
-}
-PUSHSLICE x2c20616d6f756e7420
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-ROLL 5
-PUSHINT 0
-BLKPUSH 2, 0
-CALLREF {
-	CALL $convertIntToDecStr_macro$
-}
-CALLREF {
-	CALL $assembleList_macro$
-}
-CALLREF {
-	CALL $console_no_obj_log_41304fac_macro$
-}
 .loc ../contracts/ExchangeContract.tsol, 64
 NEWC
 STSLICECONST x62_
@@ -214,7 +189,7 @@ ENDC
 PUSHINT 64
 SENDRAWMSG
 .loc ../contracts/ExchangeContract.tsol, 0
-DROP2
+BLKDROP 3
 
 .macro dexPairExchangeSuccess
 DROP
@@ -259,8 +234,23 @@ CALLREF {
 THROW 0
 
 .macro dexPairExchangeSuccess_8d6a631b_internal_macro
-.loc ../contracts/ExchangeContract.tsol, 71
-BLKDROP 3
+.loc ../contracts/ExchangeContract.tsol, 73
+ROT
+PUSHSLICE xc000000000000000000000000061e8e4c6
+NEWC
+STSLICE
+STU 64
+SWAP
+UNTUPLE 4
+REVERSE 5, 0
+STI 1
+STU 128
+STU 128
+STU 128
+ENDC
+PUSHINT 0
+SENDRAWMSG
+DROP
 .loc ../contracts/ExchangeContract.tsol, 0
 
 .macro c4_to_c7
@@ -588,41 +578,6 @@ IFNOT
 ENDC
 BLKDROP2 3, 1
 .loc ../node_modules/dex/contracts/libraries/PairPayload.tsol, 0
-
-.globl	console_with_obj_log_41304fac
-.type	console_with_obj_log_41304fac, @function
-CALL $console_with_obj_log_41304fac_macro$
-
-.macro console_with_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.tsol, 10
-DUP
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.tsol, 0
-
-.globl	console_no_obj_log_41304fac
-.type	console_no_obj_log_41304fac, @function
-CALL $console_no_obj_log_41304fac_macro$
-
-.macro console_no_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.tsol, 10
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.tsol, 0
 
 .macro public_function_selector
 DUP

@@ -51,6 +51,15 @@
 	"data": [
 	],
 	"events": [
+		{
+			"name": "SwapSuccess",
+			"inputs": [
+				{"name":"queyId","type":"uint64"},
+				{"components":[{"name":"left_to_right","type":"bool"},{"name":"spent","type":"uint128"},{"name":"fee","type":"uint128"},{"name":"received","type":"uint128"}],"name":"result","type":"tuple"}
+			],
+			"outputs": [
+			]
+		}
 	],
 	"fields": [
 		{"name":"_pubkey","type":"uint256"},

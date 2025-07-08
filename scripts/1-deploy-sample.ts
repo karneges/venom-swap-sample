@@ -1,6 +1,5 @@
-import { Address, toNano, WalletTypes } from "locklift";
-import { DexPairAbi, PAIR_DATA } from "../external_abi/DexPair";
-import { TIP3_WALLET_ABI, TIP3Abi, USDT_DATA } from "../external_abi/TIP3";
+import { Address, toNano } from "locklift";
+
 import { initializeExchangeContracts } from "./init-local-context";
 
 async function main() {
@@ -78,6 +77,15 @@ async function main() {
     );
 
     await traceTree?.beautyPrint();
+
+    const swapEvent = traceTree?.findEventsForContract({
+      contract: exchangeContract,
+      name: "SwapSuccess" as const,
+    })[0];
+
+    console.log(
+      `Swap executed successfully! ${(swapEvent?.result.spent as unknown as number) / 10 ** 6} USDT for ${(swapEvent?.result.received as unknown as number) / 10 ** 9} WVENOM`,
+    );
   }
 }
 
