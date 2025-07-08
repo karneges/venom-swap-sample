@@ -4,14 +4,19 @@ pragma AbiHeader pubkey;
 
 import "dex/contracts/libraries/PairPayload.tsol";
 import "tip3-contracts/contracts/interfaces/IAcceptTokensTransferCallback.tsol";
+import {GasValues} from "dex/contracts/libraries/GasValues.tsol";
 import {IExchangeResult} from "dex/contracts/structures/IExchangeResult.tsol";
+import {IGasValueStructure} from "dex/contracts/structures/IGasValueStructure.tsol";
 import {ITokenWallet} from "tip3-contracts/contracts/interfaces/ITokenWallet.tsol";
-import "locklift/src/console.tsol";
 
 contract ExchangeContract is IAcceptTokensTransferCallback {
     event SwapSuccess(uint64 queyId ,IExchangeResult.ExchangeResult result);
+
     mapping(address => address) rootToWallet;
-    uint16 constant WALLET_NOT_EXISTS = 101; // 1 TON
+
+    uint16 constant WALLET_NOT_EXISTS = 101;
+    uint16 constant NOT_ENOUGH_VALUE = 102;
+
     constructor() public {
         tvm.accept();
     }
@@ -27,6 +32,9 @@ contract ExchangeContract is IAcceptTokensTransferCallback {
     ) external {
         address tokenWallet = rootToWallet[tokenIn];
         require(address.makeAddrNone() != tokenWallet, WALLET_NOT_EXISTS);
+        IGasValueStructure.GasValue gas = GasValues.getPoolDirectExchangeGas(0.1 ever, address(0));
+        uint128 gasValue = gas.dynamicGas + gas.fixedValue;
+        require(msg.value >= gasValue, NOT_ENOUGH_VALUE);
         TvmCell e;
         TvmCell swapPayload = PairPayload.buildExchangePayloadV2(
             queryId,
