@@ -5,6 +5,7 @@
   "scripts": {
     "test": "npx locklift test",
     "swap-via-contract": "npx locklift run -s scripts/1-deploy-sample.ts",
+    "swap-via-contract-with-off-chain-payload": "npx locklift run -s scripts/3-swap-with-off-chain-payload.ts",
     "direct-swap": "npx locklift run -s scripts/2-direct-swap.ts"
   },
   "author": "",

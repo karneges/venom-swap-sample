@@ -59,6 +59,30 @@ contract ExchangeContract is IAcceptTokensTransferCallback {
     }
 
 
+    function makeSwapWithOffChainPayload(
+        address tokenIn,
+        uint128 amountIn,
+        uint128 deployWalletValue,
+        address pair,
+        TvmCell swapPayload
+    ) external {
+        address tokenWallet = rootToWallet[tokenIn];
+        require(address.makeAddrNone() != tokenWallet, WALLET_NOT_EXISTS);
+        IGasValueStructure.GasValue gas = GasValues.getPoolDirectExchangeGas(0.1 ever, address(0));
+        uint128 gasValue = gas.dynamicGas + gas.fixedValue;
+        require(msg.value >= gasValue, NOT_ENOUGH_VALUE);
+
+        ITokenWallet(tokenWallet).transfer{value: 0, flag: 64}(
+            amountIn,
+            pair,
+            deployWalletValue,
+            address(this),
+            true,
+            swapPayload
+        );
+    }
+
+
     function onAcceptTokensTransfer(
         address tokenRoot,
         uint128 amount,
