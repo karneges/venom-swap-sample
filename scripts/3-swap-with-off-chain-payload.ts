@@ -1,5 +1,6 @@
 import { Address, toNano } from "locklift";
 import { initializeExchangeContracts } from "./init-local-context";
+import { TIP3_WALLET_ABI, TIP3Abi } from "../external_abi/TIP3";
 
 const main = async () => {
   //addresses
@@ -16,7 +17,7 @@ const main = async () => {
     - user is a user wallet e.g. EverWallet or other type of wallet
     - pairContract is a DexPair contract that is used for swapping tokens inside the ExchangeContract
    */
-  const { userUsdtWallet, user, pairContract } = await initializeExchangeContracts({
+  const { userUsdtWallet, user, pairContract, usdtContract } = await initializeExchangeContracts({
     dexPair: dexPairAddress,
     usdt,
     usdtOwner,
@@ -67,19 +68,38 @@ const main = async () => {
     .call()
     .then(res => res.value0);
 
+  const exchangeContractTokenWallet = await usdtContract.methods
+    .walletOf({
+      answerId: 0,
+      walletOwner: exchangeContract.address,
+    })
+    .call()
+    .then(res => res.value0);
+
+  const finalPayload = await new locklift.provider.Contract(TIP3_WALLET_ABI, exchangeContract.address).methods
+    .transfer({
+      amount: 50 * 10 ** 6, // 50 USDT
+      notify: true,
+      payload: swapPayload,
+      deployWalletValue: toNano(0.1),
+      remainingGasTo: user.address,
+      recipient: pairContract.address,
+    })
+    .encodeInternal();
   const { traceTree } = await locklift.tracing.trace(
     exchangeContract.methods
       .makeSwapWithOffChainPayload({
-        swapPayload,
-        tokenIn: usdt,
-        pair: pairContract.address,
-        amountIn: 50 * 10 ** 6, // 50 USDT
-        deployWalletValue: toNano(0.1),
+        swapPayload: finalPayload,
+        dst: exchangeContractTokenWallet,
+        value: toNano(2),
       })
       .send({
         from: user.address,
         amount: toNano(5),
       }),
+    {
+      raise: false,
+    },
   );
 
   await traceTree?.beautyPrint();

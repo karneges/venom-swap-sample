@@ -16,6 +16,7 @@ export const initializeExchangeContracts = async ({
   userUsdtWallet: Contract<typeof TIP3_WALLET_ABI>;
   user: CreateAccountOutput["account"];
   pairContract: Contract<(typeof factorySource)["DexPair"]>;
+  usdtContract: Contract<typeof TIP3Abi>;
 }> => {
   const pairContract = locklift.factory.getDeployedContract("DexPair", dexPair);
   const usdtContract = locklift.network.insertAccount({
@@ -71,5 +72,6 @@ export const initializeExchangeContracts = async ({
     userUsdtWallet,
     user: user.account,
     pairContract: pairContract,
+    usdtContract: usdtContract,
   };
 };
